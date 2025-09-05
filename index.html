@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Teachers' Day 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    /* Popup Card */
+    .popup {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transform: scale(0);
+      animation: popIn 0.7s ease forwards;
+      z-index: 10;
+      max-width: 500px;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0); opacity: 0; }
+      70% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    h1 {
+      color: #ff4e50;
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #444;
+      min-height: 60px; /* keep space for changing text */
+      opacity: 0;
+      transition: opacity 1s ease-in-out; /* smooth fade effect */
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      background: #ff4e50;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #fc913a;
+    }
+
+    /* Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 60px;
+      height: 80px;
+      background: red;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      animation: floatUp 10s infinite ease-in;
+    }
+
+    /* Balloon String */
+    .balloon::after {
+      content: "";
+      position: absolute;
+      top: 80px;   /* below balloon */
+      left: 50%;
+      width: 2px;
+      height: 60px;
+      background: #555;
+      transform: translateX(-50%);
+      animation: wave 2s infinite ease-in-out;
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: translateX(-50%) rotate(5deg); }
+      50% { transform: translateX(-50%) rotate(-5deg); }
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-110vh); opacity: 0; }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: gold;
+      top: -10px;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="popup">
+    <h1>🎉 Happy Teachers' Day 🎉</h1>
+    <p id="message"></p>
+    <button onclick="closePopup()">Close</button>
+  </div>
+
+  <script>
+    // Close Popup
+    function closePopup() {
+      document.querySelector('.popup').style.display = 'none';
+      alert("Once again, Happy Teachers' Day! 🌸");
+    }
+
+    // Generate Balloons
+    function createBalloon() {
+      const balloon = document.createElement("div");
+      balloon.className = "balloon";
+      balloon.style.left = Math.random() * 100 + "vw";
+      balloon.style.background = randomColor();
+      balloon.style.animationDuration = (5 + Math.random() * 5) + "s";
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 10000);
+    }
+
+    function randomColor() {
+      const colors = ["#ff4e50", "#fc913a", "#f9d423", "#eae374", "#e1f5c4", "#00a8c6", "#ff69b4"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    setInterval(createBalloon, 1000);
+
+    // Generate Confetti
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      confetti.className = "confetti";
+      confetti.style.left = Math.random() * 100 + "vw";
+      confetti.style.background = randomColor();
+      confetti.style.animationDuration = (3 + Math.random() * 2) + "s";
+      document.body.appendChild(confetti);
+      setTimeout(() => confetti.remove(), 5000);
+    }
+
+    setInterval(createConfetti, 200);
+
+    // Heartfelt Messages Rotation
+    const messages = [
+      "DEAR DEBASISH SIR🌱",
+      "DEAR SIR MAI  BHOT GRATEFULL HU KI APP MERA TEACHER HAI APKE SATH RAHTE RAHTE MENE BHOT KUCH SIKHA HAI APKA BHOT BHOT SUKRIYA❤️",
+      "SIR APKE ENGLISH AUR COMPUTER LESSONS MUJHE SALO SALO TAK YAAD RAHENGE✨",
+      " SIR APKE SATH WOH DISCUSSIONS MUJHE BHOT KUCH SIKHYA HAI 🌟",
+      "SIR SERIOUSLY THANKS A LOT "
+    ];
+    let msgIndex = 0;
+
+    function showMessage() {
+      const msgEl = document.getElementById("message");
+      msgEl.style.opacity = 0;
+      setTimeout(() => {
+        msgEl.innerHTML = messages[msgIndex];
+        msgEl.style.opacity = 1;
+        msgIndex = (msgIndex + 1) % messages.length;
+      }, 1000);
+    }
+
+    // ✅ Show first message immediately
+    showMessage();
+
+    // Then rotate every 9 seconds
+    setInterval(showMessage, 9000);
+  </script>
+</body>
+</html>
